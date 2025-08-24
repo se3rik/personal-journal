@@ -6,8 +6,9 @@ import Body from './layout/Body/Body';
 import Header from './components/Header/Header';
 import JournalList from './components/JournalList/JournalList';
 import JournalItem from './components/JournalItem/JournalItem';
-import CardButton from './components/CardButton/CardButton';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
+import JournalForm from './components/JournalForm/JournalForm';
+import CardButton from './components/CardButton/CardButton';
 
 function App() {
 	const data = [
@@ -47,7 +48,7 @@ function App() {
 			</LeftPanel>
 
 			<Body>
-				Body
+				<JournalForm />
 			</Body>
 		</div>
 	);
