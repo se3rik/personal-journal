@@ -1,9 +1,11 @@
 import './Body.css';
 
-function Body() {
+function Body({ children }) {
 
 	return (
-		<section></section>
+		<section className='body'>
+			{children}
+		</section>
 	);
 }
 

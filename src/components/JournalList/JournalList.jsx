@@ -1,9 +1,9 @@
 import './JournalList.css';
 
-function JournalList() {
+function JournalList({children}) {
 
 	return (
-		<header></header>
+		<section className='journal-list'>{children}</section>
 	);
 }
 

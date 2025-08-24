@@ -1,9 +1,9 @@
 import './LeftPanel.css';
 
-function LeftPanel() {
+function LeftPanel({children}) {
 
 	return (
-		<section></section>
+		<section className='left-panel'>{children}</section>
 	);
 }
 

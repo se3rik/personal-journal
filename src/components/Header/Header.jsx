@@ -3,7 +3,7 @@ import './Header.css';
 function Header() {
 
 	return (
-		<header></header>
+		<>Personal Journal</>
 	);
 }
 
