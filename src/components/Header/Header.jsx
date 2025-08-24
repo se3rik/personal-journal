@@ -3,7 +3,7 @@ import './Header.css';
 function Header() {
 
 	return (
-		<>Personal Journal</>
+		<img className='logo' src="/icons/LogoIcon.svg" alt="journal logotype" />
 	);
 }
 

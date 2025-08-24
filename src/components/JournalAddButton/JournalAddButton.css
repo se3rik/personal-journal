@@ -1,4 +1,11 @@
 .journal-add {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
 	padding: 10px;
-	text-align: center;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
 }
