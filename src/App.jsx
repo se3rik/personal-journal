@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import './App.css';
 
 import LeftPanel from './layout/LeftPanel/LeftPanel';
@@ -10,19 +12,27 @@ import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 import JournalForm from './components/JournalForm/JournalForm';
 import CardButton from './components/CardButton/CardButton';
 
+const INITIAL_DATA = [{
+	title: 'Подготовка к обновлению курсов',
+	text: 'Думал, что очень много времени',
+	date: new Date()
+},
+{
+	title: 'Поход в горы',
+	text: 'Горные походы открывают удивительные природные ландшафт',
+	date: new Date()
+}];
+
 function App() {
-	const data = [
-		{
-			title: 'Подготовка к обновлению курсов',
-			text: 'Думал, что очень много времени',
-			date: new Date()
-		},
-		{
-			title: 'Поход в горы',
-			text: 'Горные походы открывают удивительные природные ландшафт',
-			date: new Date()
-		}
-	];
+	const [journalItems, setJournalItems] = useState(INITIAL_DATA);
+
+	function addJournalItem(newItem) {
+		setJournalItems((prev) => [...prev, {
+			title: newItem.title,
+			text: newItem.text,
+			date: new Date(newItem.date)
+		}]);
+	}
 
 	return (
 		<div className='app'>
@@ -30,25 +40,20 @@ function App() {
 				<Header/>
 				<JournalAddButton/>
 				<JournalList>
-					<CardButton>
-						<JournalItem 
-							title={data[0].title}
-							text={data[0].text}
-							date={data[0].date}
-						/>
-					</CardButton>
-					<CardButton>
-						<JournalItem 
-							title={data[1].title}
-							text={data[1].text}
-							date={data[1].date}
-						/>
-					</CardButton>
+					{journalItems.map((el) => (
+						<CardButton key={el.title}>
+							<JournalItem 
+								title={el.title}
+								text={el.text}
+								date={el.date}
+							/>
+						</CardButton>
+					))}
 				</JournalList>
 			</LeftPanel>
 
 			<Body>
-				<JournalForm />
+				<JournalForm addJournalItem={addJournalItem}/>
 			</Body>
 		</div>
 	);

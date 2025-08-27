@@ -36,7 +36,8 @@ export default defineConfig([
 			quotes: ['warn', 'single'],
 			'react/jsx-uses-react': 'error',
 			'react/jsx-uses-vars': 'error',
-			'indent': ['error', 'tab']
+			'indent': ['error', 'tab'],
+			'no-unused-vars': 'warn'
 		}
 	}
 ]);

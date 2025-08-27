@@ -2,13 +2,12 @@ import './JournalForm.css';
 
 import Button from './../Button/Button';
 
-function JournalForm() {
-	
+function JournalForm({addJournalItem}) {
 	function onFormSubmit(event) {
+		event.preventDefault();
 		const formData = new FormData(event.target);
 		const formProps = Object.fromEntries(formData);
-		event.preventDefault();
-		console.log(formProps);
+		addJournalItem(formProps);
 	}
 	
 	return (
@@ -16,7 +15,7 @@ function JournalForm() {
 			<input type="text" name='title' />
 			<input type="date" name='date' />
 			<input type="text" name='tag' />
-			<textarea name="post" id=""></textarea>
+			<textarea name="text" />
 			<Button text="Сохранить"/>
 		</form>
 	);
