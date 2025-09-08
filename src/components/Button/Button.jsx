@@ -1,9 +1,11 @@
+import cn from 'classnames';
+
 import styles from './Button.module.css';
 
 function Button({ text }) {
 
 	return (
-		<button className={`${styles['button']} ${styles['accent']}`}>{text}</button>
+		<button className={cn(styles['button'], styles['accent'])}>{text}</button>
 	);
 }
 
