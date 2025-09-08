@@ -1,8 +1,10 @@
-.journal-from {
+.journal-form {
 	display: flex;
 	flex-direction: column;
 	gap: 30px;
 }
+
+.input {}
 
 .invalid {
 	border: 1px solid red;

@@ -1,9 +1,9 @@
-import './Body.css';
+import styles from './Body.module.css';
 
 function Body({ children }) {
 
 	return (
-		<section className='body'>
+		<section className={styles['body']}>
 			{children}
 		</section>
 	);

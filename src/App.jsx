@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import './App.css';
+import styles from './App.module.css';
 
 import LeftPanel from './layout/LeftPanel/LeftPanel';
 import Body from './layout/Body/Body';
@@ -36,7 +36,7 @@ function App() {
 	}
 
 	return (
-		<div className='app'>
+		<div className={styles['app']}>
 			<LeftPanel>
 				<Header/>
 				<JournalAddButton/>

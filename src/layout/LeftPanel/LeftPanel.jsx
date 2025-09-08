@@ -1,9 +1,9 @@
-import './LeftPanel.css';
+import styles from './LeftPanel.module.css';
 
 function LeftPanel({children}) {
 
 	return (
-		<section className='left-panel'>{children}</section>
+		<section className={styles['left-panel']}>{children}</section>
 	);
 }
 

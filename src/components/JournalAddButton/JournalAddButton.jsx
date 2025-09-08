@@ -1,11 +1,11 @@
 import CardButton from '../CardButton/CardButton';
 
-import './JournalAddButton.css';
+import styles from './JournalAddButton.module.css';
 
 function JournalAddButton() {
 
 	return (
-		<CardButton className="journal-add">
+		<CardButton className={styles['journal-add']}>
 			<img src="/icons/PlusIcon.svg" alt="plus icon" />
 			<span>Новое воспоминание</span>
 		</CardButton>

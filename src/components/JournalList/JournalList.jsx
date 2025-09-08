@@ -1,4 +1,4 @@
-import './JournalList.css';
+import styles from './JournalList.module.css';
 
 import CardButton from '../CardButton/CardButton';
 import JournalItem from '../JournalItem/JournalItem';
@@ -14,7 +14,7 @@ function JournalList({items}) {
 	}
 
 	return(
-		<section className='journal-list'>
+		<section className={styles['journal-list']}>
 			{items.sort(sortJournalItems).map((el) => (
 				<CardButton key={el.id}>
 					<JournalItem 
