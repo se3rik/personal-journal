@@ -28,7 +28,7 @@ function App() {
 
 	function addJournalItem(newItem) {
 		setJournalItems((prev) => [...prev, {
-			id: Math.max(...prev.map(i => i.id)) + 1,
+			id: prev.length > 0 ? Math.max(...prev.map(i => i.id)) + 1 : 1,
 			title: newItem.title,
 			text: newItem.text,
 			date: new Date(newItem.date)
