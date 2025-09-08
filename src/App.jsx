@@ -7,10 +7,8 @@ import Body from './layout/Body/Body';
 
 import Header from './components/Header/Header';
 import JournalList from './components/JournalList/JournalList';
-import JournalItem from './components/JournalItem/JournalItem';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 import JournalForm from './components/JournalForm/JournalForm';
-import CardButton from './components/CardButton/CardButton';
 
 const INITIAL_DATA = [{
 	id: 1,
@@ -37,26 +35,12 @@ function App() {
 		}]);
 	}
 
-	function sortJournalItems(a, b) {
-		return a.date < b.date ? 1 : -1;
-	}
-
 	return (
 		<div className='app'>
 			<LeftPanel>
 				<Header/>
 				<JournalAddButton/>
-				<JournalList>
-					{journalItems.sort(sortJournalItems).map((el) => (
-						<CardButton key={el.id}>
-							<JournalItem 
-								title={el.title}
-								text={el.text}
-								date={el.date}
-							/>
-						</CardButton>
-					))}
-				</JournalList>
+				<JournalList items={journalItems}/>
 			</LeftPanel>
 
 			<Body>
