@@ -13,9 +13,11 @@ function JournalForm({addJournalItem}) {
 
 	function onFormSubmit(event) {
 		event.preventDefault();
-		const formData = new FormData(event.target);
-		const formProps = Object.fromEntries(formData);
-		dispatchForm({ type: 'SUBMIT', payload: formProps });
+		dispatchForm({ type: 'SUBMIT' });
+	}
+
+	function onValuesChange(event) {
+		dispatchForm({ type: 'CHANGE_VALUE', payload: { [event.target.name]: event.target.value }});
 	}
 
 	useEffect(() => {
@@ -33,6 +35,7 @@ function JournalForm({addJournalItem}) {
 	useEffect(() => {
 		if (isFormReadyToSubmit) {
 			addJournalItem(values);
+			dispatchForm({ type: 'CLEAR_FORM' });
 		}
 	}, [isFormReadyToSubmit]);
 
@@ -40,7 +43,7 @@ function JournalForm({addJournalItem}) {
 	return (
 		<form className={styles['journal-form']} onSubmit={onFormSubmit}>
 			<div>
-				<input type="text" name='title' className={cn(styles['input-title'], {
+				<input type="text" name='title' value={values.title} onChange={onValuesChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.title
 				})}/>
 			</div>
@@ -50,7 +53,7 @@ function JournalForm({addJournalItem}) {
 					<img src="/icons/CalendarIcon.svg" alt="calendar icon" />
 					<span>Дата</span>
 				</label>
-				<input type="date" name='date' id='date' className={cn(styles['input'], {
+				<input type="date" name='date' id='date' value={values.date} onChange={onValuesChange} className={cn(styles['input'], {
 					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
@@ -60,10 +63,10 @@ function JournalForm({addJournalItem}) {
 					<img src="/icons/FolderIcon.svg" alt="folder icon" />
 					<span>Метки</span>
 				</label>
-				<input type="text" id='tag' name='tag' className={styles['input']} />
+				<input type="text" id='tag' name='tag' value={values.tag} onChange={onValuesChange} className={styles['input']} />
 			</div>
 
-			<textarea name="post" cols="30" rows="10" className={cn(styles['input'], {
+			<textarea name="post" cols="30" rows="10" value={values.post} onChange={onValuesChange} className={cn(styles['input'], {
 				[styles['invalid']]: !isValid.post
 			})}/>
 			<Button text="Сохранить"/>
