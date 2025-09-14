@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 
 export function useLocalStorage(key) {
-	const [data, setData] = useState();
+	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		const res = JSON.parse(localStorage.getItem(key));
-		res ? setData(res) : setData([]);
+		if (res) {
+			setData(res);
+		}
 	}, [key]);
 
 	function saveData(newData) {
