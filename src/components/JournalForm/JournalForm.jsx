@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useContext, useEffect, useReducer, useRef } from 'react';
 import cn from 'classnames';
 
 import styles from './JournalForm.module.css';
@@ -7,6 +7,7 @@ import Button from './../Button/Button';
 import Input from '../Input/Input';
 
 import { formReducer, INITIAL_FORM_STATE } from './JournalForm.state';
+import { UserContext } from '../../context/user.context';
 
 function JournalForm({addJournalItem}) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_FORM_STATE);
@@ -14,6 +15,7 @@ function JournalForm({addJournalItem}) {
 	const titleRef = useRef();
 	const dateRef = useRef();
 	const postRef = useRef();
+	const { userId } = useContext(UserContext);
 
 	function onFormSubmit(event) {
 		event.preventDefault();
@@ -61,6 +63,7 @@ function JournalForm({addJournalItem}) {
 	
 	return (
 		<form className={styles['journal-form']} onSubmit={onFormSubmit}>
+			{userId}
 			<div>
 				<Input
 					type="text"
@@ -119,7 +122,6 @@ function JournalForm({addJournalItem}) {
 			<Button text="Сохранить"/>
 		</form>
 	);
-
 }
 
 export default JournalForm;
