@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import { formReducer, INITIAL_FORM_STATE } from './JournalForm.state';
 import { UserContext } from '../../context/user.context';
 
-function JournalForm({addJournalItem}) {
+function JournalForm({ addJournalItem, data }) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_FORM_STATE);
 	const { isValid, isFormReadyToSubmit, values } = formState;
 	const titleRef = useRef();
@@ -57,12 +57,19 @@ function JournalForm({addJournalItem}) {
 		if (isFormReadyToSubmit) {
 			addJournalItem(values);
 			dispatchForm({ type: 'CLEAR_FORM' });
+			dispatchForm({ type: 'CHANGE_VALUE', payload: { userId }});
 		}
-	}, [isFormReadyToSubmit, values, addJournalItem]);
+	}, [isFormReadyToSubmit, values, addJournalItem, userId]);
 
 	useEffect(() => {
 		dispatchForm({ type: 'CHANGE_VALUE', payload: { userId }});
 	}, [userId]);
+
+	useEffect(() => {
+		if (data) {
+			dispatchForm({ type: 'CHANGE_VALUE', payload: { ...data }});
+		}
+	}, [data]);
 	
 	return (
 		<form className={styles['journal-form']} onSubmit={onFormSubmit}>
@@ -89,7 +96,7 @@ function JournalForm({addJournalItem}) {
 					ref={dateRef} 
 					isValid={isValid.date} 
 					id='date' 
-					value={values.date} 
+					value={values.date ? new Date(values.date).toISOString().slice(0, 10) : ''} 
 					onChange={onValuesChange} 
 				/>
 			</div>

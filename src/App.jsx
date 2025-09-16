@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styles from './App.module.css';
 
 import LeftPanel from './layout/LeftPanel/LeftPanel';
@@ -15,13 +17,20 @@ import { mapItems } from './helpers/mapItems.js';
 
 function App() {
 	const [journalItems, setJournalItems] = useLocalStorage('data');
+	const [selectedItem, setSelectedItem] = useState({});
 
-	function addJournalItem(newItem) {
-		setJournalItems([...mapItems(journalItems), {
-			id: journalItems.length > 0 ? Math.max(...journalItems.map(i => i.id)) + 1 : 1,
-			date: new Date(newItem.date),
-			...newItem
-		}]);
+	function addJournalItem(item) {
+		if(!item.id) {
+			setJournalItems([...mapItems(journalItems), {
+				id: journalItems.length > 0 ? Math.max(...journalItems.map(i => i.id)) + 1 : 1,
+				date: new Date(item.date),
+				...item
+			}]);
+		} else {
+			setJournalItems([...mapItems(journalItems).map(i => {
+				return i.id === item.id ? { ...item } : i;
+			})]);
+		}
 	}
 
 	return (
@@ -30,11 +39,11 @@ function App() {
 				<LeftPanel>
 					<Header/>
 					<JournalAddButton/>
-					<JournalList items={mapItems(journalItems)}/>
+					<JournalList items={mapItems(journalItems)} setItem={setSelectedItem}/>
 				</LeftPanel>
 
 				<Body>
-					<JournalForm addJournalItem={addJournalItem}/>
+					<JournalForm addJournalItem={addJournalItem} data={selectedItem}/>
 				</Body>
 			</div>
 		</UserContextProvider>
