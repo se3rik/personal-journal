@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import { formReducer, INITIAL_FORM_STATE } from './JournalForm.state';
 import { UserContext } from '../../context/user.context';
 
-function JournalForm({ addJournalItem, data }) {
+function JournalForm({ addJournalItem, data, onDelete }) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_FORM_STATE);
 	const { isValid, isFormReadyToSubmit, values } = formState;
 	const titleRef = useRef();
@@ -40,6 +40,12 @@ function JournalForm({ addJournalItem, data }) {
 		}
 	}
 
+	function deleteJournalItem() {
+		onDelete(data.id);
+		dispatchForm({ type: 'CLEAR_FORM' });
+		dispatchForm({ type: 'CHANGE_VALUE', payload: { userId }});
+	}
+
 	useEffect(() => {
 		let timerId;
 		if (!isValid.date || !isValid.post || !isValid.title) {
@@ -66,15 +72,19 @@ function JournalForm({ addJournalItem, data }) {
 	}, [userId]);
 
 	useEffect(() => {
-		if (data) {
-			dispatchForm({ type: 'CHANGE_VALUE', payload: { ...data }});
+		if (!data) {
+			dispatchForm({ type: 'CLEAR_FORM' });
+			dispatchForm({ type: 'CHANGE_VALUE', payload: { userId }});
 		}
+		dispatchForm({ type: 'CHANGE_VALUE', payload: { ...data }});
+
 	}, [data]);
 	
 	return (
 		<form className={styles['journal-form']} onSubmit={onFormSubmit}>
-			<div>
+			<div className={styles['form-row']}>
 				<Input
+					placeholder="Название поста"
 					type="text"
 					appearence="title" 
 					name='title' 
@@ -83,6 +93,11 @@ function JournalForm({ addJournalItem, data }) {
 					value={values.title} 
 					onChange={onValuesChange}
 				/>
+				{ data?.id && (
+					<button className={styles['delete-btn']} type='button' onClick={deleteJournalItem}>
+						<img src="/icons/ArchiveIcon.svg" alt="delete-icon" />
+					</button>
+				)}
 			</div>
 
 			<div className={styles['form-row']}>
@@ -107,6 +122,7 @@ function JournalForm({ addJournalItem, data }) {
 					<span>Метки</span>
 				</label>
 				<Input 
+					placeholder='Укажите метку'
 					type="text" 
 					id='tag' 
 					name='tag'
@@ -117,6 +133,7 @@ function JournalForm({ addJournalItem, data }) {
 			</div>
 
 			<textarea 
+				placeholder='Напишите текст для поста...'
 				name="post" 
 				cols="30" 
 				rows="10" 

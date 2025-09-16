@@ -17,7 +17,7 @@ import { mapItems } from './helpers/mapItems.js';
 
 function App() {
 	const [journalItems, setJournalItems] = useLocalStorage('data');
-	const [selectedItem, setSelectedItem] = useState({});
+	const [selectedItem, setSelectedItem] = useState(null);
 
 	function addJournalItem(item) {
 		if(!item.id) {
@@ -33,17 +33,21 @@ function App() {
 		}
 	}
 
+	function deleteItem(id) {
+		setJournalItems([...journalItems.filter(i => i.id !== id)]);
+	}
+
 	return (
 		<UserContextProvider>
 			<div className={styles['app']}>
 				<LeftPanel>
 					<Header/>
-					<JournalAddButton/>
+					<JournalAddButton clearForm={() => setSelectedItem(null)}/>
 					<JournalList items={mapItems(journalItems)} setItem={setSelectedItem}/>
 				</LeftPanel>
 
 				<Body>
-					<JournalForm addJournalItem={addJournalItem} data={selectedItem}/>
+					<JournalForm addJournalItem={addJournalItem} onDelete={deleteItem} data={selectedItem}/>
 				</Body>
 			</div>
 		</UserContextProvider>
